@@ -1,4 +1,3 @@
-org: giangtranmanh
 app: serverless-demo
 service: serverless-demo
 frameworkVersion: '3'
