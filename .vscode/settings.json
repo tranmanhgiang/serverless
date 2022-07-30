@@ -1,0 +1,7 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "eslint.options": { "overrideConfigFile": "./.eslintrc.json" },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

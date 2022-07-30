@@ -7,48 +7,53 @@ provider:
   runtime: nodejs14.x
   environment:
     DYNAMODB_CUSTOMER_TABLE: ${self:service}-customerTable-${sls:stage}
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:Get*'
+            - 'dynamodb:Scan*'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: '*'
+  region: 'us-east-1'
 
 plugins:
   - serverless-offline
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - httpApi:
-          path: /
-          method: get
-
   createCustomer:
-    handler: createCustomer.createCustomer
+    handler: src/modules/customers/services/CustomerService.createCustomer
     events:
       - httpApi:
           path: /customer
           method: post
 
   getCustomers:
-    handler: getCustomers.getCustomers
+    handler: src/modules/customers/services/CustomerService.getCustomers
     events:
       - httpApi:
           path: /customer
           method: get
 
   getCustomersByName:
-    handler: getCustomerByName.getCustomerByName
+    handler: src/modules/customers/services/CustomerService.getCustomerByName
     events:
       - httpApi:
           path: /customer/{name}
           method: get
 
   deleteCustomersByName:
-    handler: deleteCustomer.deleteCustomer
+    handler: src/modules/customers/services/CustomerService.deleteCustomer
     events:
       - httpApi:
           path: /customer/{name}
           method: delete
 
   editCustomersByName:
-    handler: editCustomer.editCustomer
+    handler: src/modules/customers/services/CustomerService.editCustomer
     events:
       - httpApi:
           path: /customer/{name}
